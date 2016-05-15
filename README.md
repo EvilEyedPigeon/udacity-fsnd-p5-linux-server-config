@@ -17,9 +17,9 @@ mv ~/Downloads/udacity_key.rsa ~/.ssh/
 chmod 600 ~/.ssh/udacity_key.rsa
 ssh -i ~/.ssh/udacity_key.rsa root@SERVER_IP
 ```
+Note: For chmod to work using Cygwin on Windows, had to do `chgrp -R Users ~/.ssh`; see [2]. 
 
-
-Remote root access has been disabled and a `catalog` user has been creatd. To access the server use:
+Remote root access has been disabled and a `catalog` user has been created. To access the server use:
 ```
 ssh -p SSH_PORT -i ~/.ssh/udacity_key_catalog catalog@SERVER_IP
 ```
@@ -73,3 +73,4 @@ User management
 
 
 [1]: https://www.udacity.com/account#!/development_environment "My Udacity's development environment"
+[2]: http://superuser.com/questions/397288/using-cygwin-in-windows-8-chmod-600-does-not-work-as-expected "Using Cygwin on Windows chmod 600 does not work as expected"
