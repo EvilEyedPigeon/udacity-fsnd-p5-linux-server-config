@@ -49,7 +49,7 @@ User management
   ```
   nano /etc/sudoers.d/catalog
   ```
-  Edit file:
+  Edit file and remove `NOPASSWD`:
   ```
   student ALL=(ALL) ALL
   ````
@@ -77,7 +77,7 @@ Security
 
   - By doing this the user does not have to have the `root` user's key. For this project it does not matter since the `catalog` user is the only user and it has full sudo access, but in general this is better.
 
-  - Keys generated on personal computer (not on server) to keep the private key private, uUsing `ssh-keygen` and saving to file `~/.ssh/udacity_key_catalog`. This generates a file `udacity_key_catalog` with the private key and a file `udacity_key_catalog.pub` with the public key. Read `man ssh-keygen` for more details.
+  - Keys generated on personal computer (not on server) to keep the private key private, using `ssh-keygen` and saving to file `~/.ssh/udacity_key_catalog`. This generates a file `udacity_key_catalog` with the private key and a file `udacity_key_catalog.pub` with the public key. Read `man ssh-keygen` for more details.
 
   - Add public key to server:
     ```
@@ -95,12 +95,36 @@ Security
     ```
 
 1. SSH is hosted on non-default port.
+   `sudo nano /etc/ssh/sshd_config`
+   Set:
+   `Port SSH_PORT`
+   Then:
+   `service ssh restart`
 
-   Pending...
+2. Firewall configured to only allow connections for SSH (port SSH_PORT), HTTP (port 80), and NTP (port 123).
 
-2. Only allow connections for SSH (port 2200), HTTP (port 80), and NTP (port 123).
+    - To start, make sure the firewall is disabled with `sudo ufw status`.
 
-   Pending...
+    - Configure general rules:
+    `
+    sudo ufw default deny incoming
+    sudo ufw default allow outgoing
+    `
+
+    - Allow connections for SSH (port SSH_PORT), HTTP (default port 80), and NTP (default port 123):
+    ```
+    sudo ufw allow SSH_PORT/tcp
+    sudo ufw allow www
+    sudo ufw allow ntp
+    sudo ufw show added
+    ```
+
+    - Enable the firewall:
+    ```
+    sudo ufw enable
+    sudo ufw status
+    ```
+
 
 3. Key-based SSH authentication is enforced.
 
