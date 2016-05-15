@@ -141,7 +141,7 @@ Security
 3. Key-based SSH authentication is enforced.
    
     - Edit config file:
-      `sudo nano /etc/ssh/sshd_config`
+      ```sudo nano /etc/ssh/sshd_config```
     
     - Set port number:
       ```PasswordAuthentication no```
@@ -153,9 +153,24 @@ Security
 
 4. Applications have been updated to most recent updates.
 
-   Pending...
+    - Update packages:
+      ```
+      sudo apt-get update
+      sudo apt-get upgrade
+      ```
+
+    - Configure automatic _security_ updates (see [Ubuntu Documentation: Automatic Security Updates][3]):
+      ```
+      sudo apt install unattended-upgrades
+      sudo dpkg-reconfigure --priority=low unattended-upgrades
+      ```
+
+    - Configure `Unattended-Upgrade::Mail` in `/etc/apt/apt.conf.d/50unattended-upgrades` to receive problem notifications.
+
+
 
 
 
 [1]: https://www.udacity.com/account#!/development_environment "My Udacity's development environment"
 [2]: http://superuser.com/questions/397288/using-cygwin-in-windows-8-chmod-600-does-not-work-as-expected "Using Cygwin in Windows 8, chmod 600 does not work as expected?"
+[3]: https://help.ubuntu.com/community/AutomaticSecurityUpdates "Ubuntu Documentation: Automatic Security Updates"
