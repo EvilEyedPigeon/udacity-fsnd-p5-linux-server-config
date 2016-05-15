@@ -40,6 +40,7 @@ User management
   touch catalog
   chmod 440 catalog
   ```
+
   Edit `catalog` file and add line:
   ```
   student ALL=(ALL) NOPASSWD:ALL
@@ -49,6 +50,7 @@ User management
   ```
   nano /etc/sudoers.d/catalog
   ```
+
   Edit file and remove `NOPASSWD`:
   ```
   student ALL=(ALL) ALL
@@ -58,14 +60,17 @@ User management
   ```
   nano /etc/ssh/sshd_config
   ```
+  
   Set:
   ```
   PermitRootLogin no
   ```
+  
   Then:
   ```
   service ssh restart
   ```
+  
   Warning: Make sure you can access the server with other user before disabling this.
 
 
@@ -86,7 +91,9 @@ Security
     touch .ssh/authorized_keys
     nano .ssh/authorized_keys
     ```
+   
     Paste public key inside the `authorized_keys` file.
+   
     ```
     chmod 700 .ssh
     chmod 644 .ssh/authorized_keys
@@ -95,20 +102,26 @@ Security
     ```
 
 1. SSH is hosted on non-default port.
+   
     - Edit config file:
       `sudo nano /etc/ssh/sshd_config`
+   
     - Set port number:
       ```Port SSH_PORT```
+   
     - Then restart SSH:
       ```service ssh restart```
 
 2. Firewall configured to only allow connections for SSH (port SSH_PORT), HTTP (port 80), and NTP (port 123).
+   
     - To start, make sure the firewall is disabled with `sudo ufw status`.
+   
     - Configure general rules:
       ```
       sudo ufw default deny incoming
       sudo ufw default allow outgoing
       ```
+    
     - Allow connections for SSH (port SSH_PORT), HTTP (default port 80), and NTP (default port 123):
       ```
       sudo ufw allow SSH_PORT/tcp
@@ -116,20 +129,26 @@ Security
       sudo ufw allow ntp
       sudo ufw show added
       ```
+    
     - Enable the firewall and make sure it is active:
       ```
       sudo ufw enable
       sudo ufw status
       ```
+    
     * Warning: Make sure you are connected over port SSH_PORT before doing this.
 
 3. Key-based SSH authentication is enforced.
+   
     - Edit config file:
       `sudo nano /etc/ssh/sshd_config`
+    
     - Set port number:
       ```PasswordAuthentication no```
-    - Then restart SSH:
+    
+    - Then restart SSH
       ```service ssh restart```
+    
     * Warning: Make sure you can access the server with the SSH key before doing this.
 
 4. Applications have been updated to most recent updates.
