@@ -95,31 +95,31 @@ Security
     ```
 
 1. SSH is hosted on non-default port.
-   ```sudo nano /etc/ssh/sshd_config```
-   Set:
-   ```Port SSH_PORT```
-   Then:
-   ```service ssh restart```
+  ```sudo nano /etc/ssh/sshd_config```
+  Set:
+  ```Port SSH_PORT```
+  Then:
+  ```service ssh restart```
 
 2. Firewall configured to only allow connections for SSH (port SSH_PORT), HTTP (port 80), and NTP (port 123).
-    - To start, make sure the firewall is disabled with `sudo ufw status`.
-    - Configure general rules:
-      ```
-      sudo ufw default deny incoming
-      sudo ufw default allow outgoing
-      ```
-    - Allow connections for SSH (port SSH_PORT), HTTP (default port 80), and NTP (default port 123):
-      ```
-      sudo ufw allow SSH_PORT/tcp
-      sudo ufw allow www
-      sudo ufw allow ntp
-      sudo ufw show added
-      ```
-    - Enable the firewall and make sure it is active:
-      ```
-      sudo ufw enable
-      sudo ufw status
-      ```
+  - To start, make sure the firewall is disabled with `sudo ufw status`.
+  - Configure general rules:
+    ```
+    sudo ufw default deny incoming
+    sudo ufw default allow outgoing
+    ```
+  - Allow connections for SSH (port SSH_PORT), HTTP (default port 80), and NTP (default port 123):
+    ```
+    sudo ufw allow SSH_PORT/tcp
+    sudo ufw allow www
+    sudo ufw allow ntp
+    sudo ufw show added
+    ```
+  - Enable the firewall and make sure it is active:
+    ```
+    sudo ufw enable
+    sudo ufw status
+    ```
 
 
 3. Key-based SSH authentication is enforced.
