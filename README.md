@@ -11,20 +11,19 @@ Accessing the server
 
 Udacity provided a [development environment][1] on AWS.
 
-To access the server the first time, downloaded private key connected as `root` using ssh:
+To access the server the first time, downloaded private key and connected as `root` using ssh:
 ```
 mv ~/Downloads/udacity_key.rsa ~/.ssh/
 chmod 600 ~/.ssh/udacity_key.rsa
 ssh -i ~/.ssh/udacity_key.rsa root@SERVER_IP
 ```
-Note: For chmod to work using Cygwin on Windows, had to do `chgrp -R Users ~/.ssh`; see [2]. 
+Note: For chmod to work using Cygwin on Windows, had to do `chgrp -R Users ~/.ssh`; see [chmod 600 using Cygwin and Windows][2]
 
-Remote root access has been disabled and a `catalog` user has been created. To access the server use:
+Remote root access has been disabled and a `catalog` user has been created with its own SSH key. To access the server use:
 ```
 ssh -p SSH_PORT -i ~/.ssh/udacity_key_catalog catalog@SERVER_IP
 ```
-
-For this to work, the private key file `udacity_key_catalog` is necessary (only provided to grader).
+For this to work, the private key file `udacity_key_catalog` is required (only provided to grader).
 
 
 User management
@@ -71,6 +70,47 @@ User management
 
 
 
+Security
+--------
+
+0. Generated new key pair for user `catalog`:
+
+  - By doing this the user does not have to have the `root` user's key. For this project it does not matter since the `catalog` user is the only user and it has full sudo access, but in general this is better.
+
+  - Keys generated on personal computer (not on server) to keep the private key private, uUsing `ssh-keygen` and saving to file `~/.ssh/udacity_key_catalog`. This generates a file `udacity_key_catalog` with the private key and a file `udacity_key_catalog.pub` with the public key. Read `man ssh-keygen` for more details.
+
+  - Add public key to server:
+    ```
+    cd /home/catalog
+    mkdir .ssh
+    touch .ssh/authorized_keys
+    nano .ssh/authorized_keys
+    ```
+    Paste public key inside the `authorized_keys` file.
+    ```
+    chmod 700 .ssh
+    chmod 644 .ssh/authorized_keys
+    chown catalog:catalog -R .ssh
+    service ssh restart
+    ```
+
+1. SSH is hosted on non-default port.
+
+   Pending...
+
+2. Only allow connections for SSH (port 2200), HTTP (port 80), and NTP (port 123).
+
+   Pending...
+
+3. Key-based SSH authentication is enforced.
+
+   Pending...
+
+4. Applications have been updated to most recent updates.
+
+   Pending...
+
+
 
 [1]: https://www.udacity.com/account#!/development_environment "My Udacity's development environment"
-[2]: http://superuser.com/questions/397288/using-cygwin-in-windows-8-chmod-600-does-not-work-as-expected "Using Cygwin on Windows chmod 600 does not work as expected"
+[2]: http://superuser.com/questions/397288/using-cygwin-in-windows-8-chmod-600-does-not-work-as-expected "Using Cygwin in Windows 8, chmod 600 does not work as expected?"
