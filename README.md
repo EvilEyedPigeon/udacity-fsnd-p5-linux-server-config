@@ -173,7 +173,7 @@ Application
 
 TODO:
 
-- Install DB server
+- Secure database 
 - Install packages required by app
 - Get app
 - Configure app
@@ -181,7 +181,18 @@ TODO:
 
 1. Database server has been configured to serve data (postresql is recommended).
 
-    Pending...
+    - Install [PostgreSQL][4] and [Psycopg][5] adapter for Python:
+      ```
+      sudo apt-get -qqy install postgresql python-psycopg2
+      ```
+
+    - Create database user and empty database:
+      ```
+      sudo -u postgres createuser -dRS catalog
+      sudo -u catalog createdb catalog
+      ```
+      Note: Since this is a simple app with its own simple database, the configuration uses the Linux user to authenticate with the database. For more complex applications, a separate database user with its own password may be desirable.
+
 
 2. VM can be remotely logged into.
 
@@ -202,3 +213,5 @@ TODO:
 [1]: https://www.udacity.com/account#!/development_environment "My Udacity's development environment"
 [2]: http://superuser.com/questions/397288/using-cygwin-in-windows-8-chmod-600-does-not-work-as-expected "Using Cygwin in Windows 8, chmod 600 does not work as expected?"
 [3]: https://help.ubuntu.com/community/AutomaticSecurityUpdates "Ubuntu Documentation: Automatic Security Updates"
+[4]: http://www.postgresql.org/ "PostgreSQL"
+[5]: http://initd.org/psycopg/ "Psycopg"
