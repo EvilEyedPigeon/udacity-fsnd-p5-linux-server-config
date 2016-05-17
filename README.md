@@ -168,6 +168,34 @@ Security
     - Configure `Unattended-Upgrade::Mail` in `/etc/apt/apt.conf.d/50unattended-upgrades` to receive problem notifications.
 
 
+Application
+-----------
+
+TODO:
+
+- Install DB server
+- Install packages required by app
+- Get app
+- Configure app
+- Run app!
+
+1. Database server has been configured to serve data (postresql is recommended).
+
+    Pending...
+
+2. VM can be remotely logged into.
+
+    Pending...
+
+3. Web-server has been configured to serve the Item Catalog application as a wsgi app.
+
+    - Install apache web server and mod_wsgi
+      ```
+      sudo apt-get update
+      sudo apt-get install apache2
+      sudo apt-get install libapache2-mod-wsgi
+      ```
+
 
 
 
