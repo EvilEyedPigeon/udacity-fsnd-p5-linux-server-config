@@ -173,7 +173,6 @@ Application
 
 TODO:
 
-- Secure database 
 - Install packages required by app
 - Get app
 - Configure app
@@ -193,6 +192,22 @@ TODO:
       ```
       Note: Since this is a simple app with its own simple database, the configuration uses the Linux user to authenticate with the database. For more complex applications, a separate database user with its own password may be desirable.
 
+    - Update permissions (see [StackExchange][6] and [DigitalOcean][7]):
+      ```
+      psql
+      catalog=> REVOKE CONNECT ON DATABASE catalog FROM PUBLIC;
+      catalog=> GRANT CONNECT ON DATABASE catalog TO catalog;
+      catalog=> REVOKE ALL ON ALL TABLES IN SCHEMA public FROM PUBLIC;
+      catalog=> GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO catalog;
+      catalog=> ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO catalog;
+      catalog=> ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT, USAGE ON SEQUENCES TO catalog;
+      ```
+
+      Note: Priviledges are given to the catalog user directly. For more complex situations, using roles may be desirable.
+
+    - Remote connections are dissabled by default in `/etc/postgresql/9.1/main/pg_hba.conf`
+
+
 
 2. VM can be remotely logged into.
 
@@ -200,7 +215,7 @@ TODO:
 
 3. Web-server has been configured to serve the Item Catalog application as a wsgi app.
 
-    - Install apache web server and mod_wsgi
+    - Install apache web server and mod_wsgi:
       ```
       sudo apt-get update
       sudo apt-get install apache2
@@ -215,3 +230,5 @@ TODO:
 [3]: https://help.ubuntu.com/community/AutomaticSecurityUpdates "Ubuntu Documentation: Automatic Security Updates"
 [4]: http://www.postgresql.org/ "PostgreSQL"
 [5]: http://initd.org/psycopg/ "Psycopg"
+[6]: http://dba.stackexchange.com/questions/33943/granting-access-to-all-tables-for-a-user "Granting access to all tables for a user"
+[7]: https://www.digitalocean.com/community/tutorials/how-to-secure-postgresql-on-an-ubuntu-vps "How To Secure PostgreSQL on an Ubuntu VPS"
