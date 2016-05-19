@@ -68,7 +68,7 @@ User management
   
   Then:
   ```
-  service ssh restart
+  $ service ssh restart
   ```
   
   Warning: Make sure you can access the server with other user before disabling this.
@@ -173,7 +173,6 @@ Application
 
 TODO:
 
-- Install packages required by app
 - Get app
 - Configure app
 - Run app!
@@ -220,6 +219,22 @@ TODO:
       $ sudo apt-get update
       $ sudo apt-get install apache2
       $ sudo apt-get install libapache2-mod-wsgi
+      ```
+
+    - Install packages required by the application:
+      ```
+      $ sudo apt-get -qqy update
+      $ sudo apt-get -qqy install python-flask python-sqlalchemy
+      $ sudo apt-get -qqy install python-pip
+      $ sudo pip install oauth2client
+      $ sudo pip install requests
+      $ sudo pip install httplib2
+      $ sudo pip install redis
+      $ sudo pip install passlib
+      $ sudo pip install itsdangerous
+      $ sudo pip install flask-httpauth
+      $ sudo pip install Flask-WTF
+      $ sudo pip install Flask-SQLAlchemy
       ```
 
 
