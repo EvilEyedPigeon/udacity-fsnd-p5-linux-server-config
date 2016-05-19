@@ -31,14 +31,14 @@ User management
 
 - Created `catalog` user.
   ```
-  adduser catalog
+  $ adduser catalog
   ```
 
 - Gave sudo permissions to `catalog` user.
   ```
-  cd /etc/sudoers.d/
-  touch catalog
-  chmod 440 catalog
+  $ cd /etc/sudoers.d/
+  $ touch catalog
+  $ chmod 440 catalog
   ```
 
   Edit `catalog` file and add line:
@@ -48,7 +48,7 @@ User management
 
 - Password is required for `catalog` user when using sudo (using default timeout).
   ```
-  nano /etc/sudoers.d/catalog
+  $ nano /etc/sudoers.d/catalog
   ```
 
   Edit file and remove `NOPASSWD`:
@@ -58,7 +58,7 @@ User management
 
 - Remote login of `root` user is disabled.
   ```
-  nano /etc/ssh/sshd_config
+  $ nano /etc/ssh/sshd_config
   ```
   
   Set:
@@ -86,31 +86,31 @@ Security
 
   - Add public key to server:
     ```
-    cd /home/catalog
-    mkdir .ssh
-    touch .ssh/authorized_keys
-    nano .ssh/authorized_keys
+    $ cd /home/catalog
+    $ mkdir .ssh
+    $ touch .ssh/authorized_keys
+    $ nano .ssh/authorized_keys
     ```
    
     Paste public key inside the `authorized_keys` file.
    
     ```
-    chmod 700 .ssh
-    chmod 644 .ssh/authorized_keys
-    chown catalog:catalog -R .ssh
-    service ssh restart
+    $ chmod 700 .ssh
+    $ chmod 644 .ssh/authorized_keys
+    $ chown catalog:catalog -R .ssh
+    $ service ssh restart
     ```
 
 1. SSH is hosted on non-default port.
    
     - Edit config file:
-      `sudo nano /etc/ssh/sshd_config`
+      `$ sudo nano /etc/ssh/sshd_config`
    
     - Set port number:
       ```Port SSH_PORT```
    
     - Then restart SSH:
-      ```service ssh restart```
+      ```$ service ssh restart```
 
 2. Firewall configured to only allow connections for SSH (port SSH_PORT), HTTP (port 80), and NTP (port 123).
    
@@ -118,22 +118,22 @@ Security
    
     - Configure general rules:
       ```
-      sudo ufw default deny incoming
-      sudo ufw default allow outgoing
+      $ sudo ufw default deny incoming
+      $ sudo ufw default allow outgoing
       ```
     
     - Allow connections for SSH (port SSH_PORT), HTTP (default port 80), and NTP (default port 123):
       ```
-      sudo ufw allow SSH_PORT/tcp
-      sudo ufw allow www
-      sudo ufw allow ntp
-      sudo ufw show added
+      $ sudo ufw allow SSH_PORT/tcp
+      $ sudo ufw allow www
+      $ sudo ufw allow ntp
+      $ sudo ufw show added
       ```
     
     - Enable the firewall and make sure it is active:
       ```
-      sudo ufw enable
-      sudo ufw status
+      $ sudo ufw enable
+      $ sudo ufw status
       ```
     
     * Warning: Make sure you are connected over port SSH_PORT before doing this.
@@ -141,13 +141,13 @@ Security
 3. Key-based SSH authentication is enforced.
    
     - Edit config file:
-      ```sudo nano /etc/ssh/sshd_config```
+      ```$ sudo nano /etc/ssh/sshd_config```
     
-    - Set port number:
+    - Set option:
       ```PasswordAuthentication no```
     
     - Then restart SSH
-      ```service ssh restart```
+      ```$ service ssh restart```
     
     * Warning: Make sure you can access the server with the SSH key before doing this.
 
@@ -155,14 +155,14 @@ Security
 
     - Update packages:
       ```
-      sudo apt-get update
-      sudo apt-get upgrade
+      $ sudo apt-get update
+      $ sudo apt-get upgrade
       ```
 
     - Configure automatic _security_ updates (see [Ubuntu Documentation: Automatic Security Updates][3]):
       ```
-      sudo apt install unattended-upgrades
-      sudo dpkg-reconfigure --priority=low unattended-upgrades
+      $ sudo apt install unattended-upgrades
+      $ sudo dpkg-reconfigure --priority=low unattended-upgrades
       ```
 
     - Configure `Unattended-Upgrade::Mail` in `/etc/apt/apt.conf.d/50unattended-upgrades` to receive problem notifications.
@@ -182,19 +182,19 @@ TODO:
 
     - Install [PostgreSQL][4] and [Psycopg][5] adapter for Python:
       ```
-      sudo apt-get -qqy install postgresql python-psycopg2
+      $ sudo apt-get -qqy install postgresql python-psycopg2
       ```
 
     - Create database user and empty database:
       ```
-      sudo -u postgres createuser -dRS catalog
-      sudo -u catalog createdb catalog
+      $ sudo -u postgres createuser -dRS catalog
+      $ sudo -u catalog createdb catalog
       ```
-      Note: Since this is a simple app with its own simple database, the configuration uses the Linux user to authenticate with the database. For more complex applications, a separate database user with its own password may be desirable.
+      Note: Since this is a simple app with its own simple database, the Linux user is used to authenticate with the database. For more complex applications, a separate database user with its own password may be desirable.
 
     - Update permissions (see [StackExchange][6] and [DigitalOcean][7]):
       ```
-      psql
+      $ psql
       catalog=> REVOKE CONNECT ON DATABASE catalog FROM PUBLIC;
       catalog=> GRANT CONNECT ON DATABASE catalog TO catalog;
       catalog=> REVOKE ALL ON ALL TABLES IN SCHEMA public FROM PUBLIC;
@@ -205,7 +205,7 @@ TODO:
 
       Note: Priviledges are given to the catalog user directly. For more complex situations, using roles may be desirable.
 
-    - Remote connections are dissabled by default in `/etc/postgresql/9.1/main/pg_hba.conf`
+    - Remote connections are dissabled (by default) in `/etc/postgresql/9.3/main/pg_hba.conf`
 
 
 
@@ -215,11 +215,11 @@ TODO:
 
 3. Web-server has been configured to serve the Item Catalog application as a wsgi app.
 
-    - Install apache web server and mod_wsgi:
+    - Install [Apache][8] web server and [mod_wsgi][9]:
       ```
-      sudo apt-get update
-      sudo apt-get install apache2
-      sudo apt-get install libapache2-mod-wsgi
+      $ sudo apt-get update
+      $ sudo apt-get install apache2
+      $ sudo apt-get install libapache2-mod-wsgi
       ```
 
 
@@ -232,3 +232,5 @@ TODO:
 [5]: http://initd.org/psycopg/ "Psycopg"
 [6]: http://dba.stackexchange.com/questions/33943/granting-access-to-all-tables-for-a-user "Granting access to all tables for a user"
 [7]: https://www.digitalocean.com/community/tutorials/how-to-secure-postgresql-on-an-ubuntu-vps "How To Secure PostgreSQL on an Ubuntu VPS"
+[8]: https://httpd.apache.org/ "Apache webserver"
+[9]: http://www.modwsgi.org/ "mod_wsgi"
