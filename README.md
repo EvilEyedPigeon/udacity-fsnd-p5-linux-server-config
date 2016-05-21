@@ -173,7 +173,6 @@ Application
 
 TODO:
 
-- Get app
 - Configure app
 - Run app!
 
@@ -248,6 +247,11 @@ TODO:
       $ scp -rp -i ~/.ssh/udacity_key_catalog -P SSH_PORT udacity-fsnd-p3-item-catalog/vagrant/catalog/ catalog@SERVER_IP:~
       ```
 
+    - Configure application (see configuration details on project's README):
+
+      - Google sign-in (configure [Google Developers Console project][10] and add `client_secret_google.json`)
+      - Secret keys (be sure to update these and use randomly generated secure keys)
+
     - Initialize database (create tables and add sample data):
       ```
       $ cd /var/www/catalog/
@@ -267,3 +271,4 @@ TODO:
 [7]: https://www.digitalocean.com/community/tutorials/how-to-secure-postgresql-on-an-ubuntu-vps "How To Secure PostgreSQL on an Ubuntu VPS"
 [8]: https://httpd.apache.org/ "Apache webserver"
 [9]: http://www.modwsgi.org/ "mod_wsgi"
+[10]: https://developers.google.com/identity/sign-in/web/devconsole-project "Creating a Google Developers Console project and client ID"
