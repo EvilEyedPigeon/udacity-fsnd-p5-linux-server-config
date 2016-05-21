@@ -248,6 +248,13 @@ TODO:
       $ scp -rp -i ~/.ssh/udacity_key_catalog -P SSH_PORT udacity-fsnd-p3-item-catalog/vagrant/catalog/ catalog@SERVER_IP:~
       ```
 
+    - Initialize database (create tables and add sample data):
+      ```
+      $ cd /var/www/catalog/
+      $ sudo -u catalog python database_setup.py
+      $ sudo -u catalog python populate_database.py
+      ```
+
 
 
 
