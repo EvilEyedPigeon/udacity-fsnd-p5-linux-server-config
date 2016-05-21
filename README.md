@@ -237,6 +237,17 @@ TODO:
       $ sudo pip install Flask-SQLAlchemy
       ```
 
+    - Copy application to server (ignore vagrant files):
+      ```
+      $ sudo apt-get -qqy install git
+      $ git clone https://github.com/pt314/udacity-fsnd-p3-item-catalog.git
+      $ sudo cp -r udacity-fsnd-p3-item-catalog/vagrant/catalog/ /var/www/
+      ```
+      Alternatively clone on local computer and copy to server:
+      ```
+      $ scp -rp -i ~/.ssh/udacity_key_catalog -P SSH_PORT udacity-fsnd-p3-item-catalog/vagrant/catalog/ catalog@SERVER_IP:~
+      ```
+
 
 
 
