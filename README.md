@@ -252,13 +252,13 @@ TODO:
       - Google sign-in (configure [Google Developers Console project][10] and add `client_secret_google.json`)
       - Secret keys (be sure to update these and use randomly generated secure keys)
 
-      Note: Created [issue](https://github.com/pt314/udacity-fsnd-p3-item-catalog/issues/2) -> Move settins to config file.
+      Note: Created [issue](https://github.com/pt314/udacity-fsnd-p3-item-catalog/issues/2) - Move settings to config file.
 
     - Allow application to write images to uploads folder:
       ```
       $ sudo chown catalog /var/www/catalog/uploads/
       ```
-      Note: Created [issue](https://github.com/pt314/udacity-fsnd-p3-item-catalog/issues/1) -> Ideally, files would be saved to a location outside of the application directory.
+      Note: Created [issue](https://github.com/pt314/udacity-fsnd-p3-item-catalog/issues/1) - Ideally, files would be saved to a location outside of the application directory.
 
     - Initialize database (create tables and add sample data):
       ```
