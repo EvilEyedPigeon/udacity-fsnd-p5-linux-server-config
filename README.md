@@ -320,3 +320,4 @@ TODO:
 [8]: https://httpd.apache.org/ "Apache webserver"
 [9]: http://www.modwsgi.org/ "mod_wsgi"
 [10]: https://developers.google.com/identity/sign-in/web/devconsole-project "Creating a Google Developers Console project and client ID"
+[11]: http://flask.pocoo.org/docs/0.10/deploying/mod_wsgi/ "Flask documentation: mod_wsgi (Apache)"
