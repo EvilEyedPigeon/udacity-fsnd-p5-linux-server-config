@@ -171,12 +171,7 @@ Security
 Application
 -----------
 
-TODO:
-
-- Configure app
-- Run app!
-
-1. Database server has been configured to serve data (postresql is recommended).
+1. Database server has been configured to serve data.
 
     - Install [PostgreSQL][4] and [Psycopg][5] adapter for Python:
       ```
@@ -205,11 +200,9 @@ TODO:
 
     - Remote connections are dissabled (by default) in `/etc/postgresql/9.3/main/pg_hba.conf`
 
-
-
 2. VM can be remotely logged into.
 
-    Pending...
+    See how to access the server at the top of this file.
 
 3. Web-server has been configured to serve the Item Catalog application as a wsgi app.
 
@@ -236,18 +229,18 @@ TODO:
       $ sudo pip install Flask-SQLAlchemy
       ```
 
-    - Copy application to server (ignore vagrant files):
+    - Copy application to server (ignore vagrant and git files):
       ```
       $ sudo apt-get -qqy install git
       $ git clone https://github.com/pt314/udacity-fsnd-p3-item-catalog.git
       $ sudo cp -r udacity-fsnd-p3-item-catalog/vagrant/catalog/ /var/www/
       ```
-      Alternatively clone on local computer and copy to server:
+      Alternatively clone on local computer and copy to server using `scp`:
       ```
       $ scp -rp -i ~/.ssh/udacity_key_catalog -P SSH_PORT udacity-fsnd-p3-item-catalog/vagrant/catalog/ catalog@SERVER_IP:~
       ```
 
-    - Configure application (see configuration details on project's README):
+    - Configure application (see configuration details in project's README):
 
       - Google sign-in (configure [Google Developers Console project][10] and add `client_secret_google.json`)
       - Secret keys (be sure to update these and use randomly generated secure keys, using for example [keygen.py](keygen.py))
@@ -267,7 +260,7 @@ TODO:
       $ sudo -u catalog python populate_database.py
       ```
 
-    - Add `.wsgi` [file](catalog.wsgi) to `/var/www/catalog/` folder:
+    - Add [`catalog.wsgi`](catalog.wsgi) file to `/var/www/catalog/` folder:
       ```
       import sys
 
@@ -280,7 +273,7 @@ TODO:
 
     - Configure Apache virtual host and enable site:
 
-      Add [`catalog.conf` file](catalog.conf) to `/etc/apache2/sites-available` folder (see [Flask documentation][11]):
+      Add [`catalog.conf`](catalog.conf) file to `/etc/apache2/sites-available` folder (see [Flask documentation][11]):
       ```
       <VirtualHost *:80>
           ServerName SERVER_NAME
