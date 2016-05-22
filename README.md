@@ -250,7 +250,7 @@ TODO:
     - Configure application (see configuration details on project's README):
 
       - Google sign-in (configure [Google Developers Console project][10] and add `client_secret_google.json`)
-      - Secret keys (be sure to update these and use randomly generated secure keys)
+      - Secret keys (be sure to update these and use randomly generated secure keys, using for example [keygen.py](keygen.py))
 
       Note: Created [issue](https://github.com/pt314/udacity-fsnd-p3-item-catalog/issues/2) - Move settings to config file.
 
