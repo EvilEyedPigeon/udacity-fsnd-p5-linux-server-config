@@ -267,7 +267,7 @@ TODO:
       $ sudo -u catalog python populate_database.py
       ```
 
-    - Add `.wsgi` [file][catalog.wsgi] to `/var/www/catalog/` folder:
+    - Add `.wsgi` [file](catalog.wsgi) to `/var/www/catalog/` folder:
       ```
       import sys
 
