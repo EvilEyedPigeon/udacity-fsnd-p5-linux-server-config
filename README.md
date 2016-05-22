@@ -278,7 +278,36 @@ TODO:
       from catalog import app as application
       ```
 
+    - Configure Apache virtual host and enable site:
 
+      Add [`catalog.conf` file](catalog.conf) to `/etc/apache2/sites-available` folder (see [Flask documentation][11]):
+      ```
+      <VirtualHost *:80>
+          ServerName SERVER_NAME
+
+          WSGIDaemonProcess catalog user=catalog group=catalog threads=5
+          WSGIScriptAlias / /var/www/catalog/catalog.wsgi
+
+          <Directory /var/www/catalog>
+              WSGIProcessGroup catalog
+              WSGIApplicationGroup %{GLOBAL}
+              Order deny,allow
+              Allow from all
+          </Directory>
+
+          ErrorLog ${APACHE_LOG_DIR}/error.log
+          CustomLog ${APACHE_LOG_DIR}/access.log combined
+      </VirtualHost>
+      ```
+
+      Enable site and restart Apache:
+      ```
+      $ sudo service apache2 reload
+      $ sudo a2ensite catalog
+      $ sudo apache2ctl restart
+      ```
+
+      The application should be available at the APP_URL.
 
 
 [1]: https://www.udacity.com/account#!/development_environment "My Udacity's development environment"
