@@ -271,6 +271,10 @@ Application
       from catalog import app as application
       ```
 
+    - Disable directory browsing:
+
+      Edit `/etc/apache2/apache2.conf` and remove `Indexes` from `/var/www/` directory options, and restart Apache.
+
     - Configure Apache virtual host and enable site:
 
       Add [`catalog.conf`](catalog.conf) file to `/etc/apache2/sites-available` folder (see [Flask documentation][11]):
@@ -295,8 +299,9 @@ Application
 
       Enable site and restart Apache:
       ```
-      $ sudo service apache2 reload
+      $ sudo a2dissite 000-default
       $ sudo a2ensite catalog
+      $ sudo service apache2 reload
       $ sudo apache2ctl restart
       ```
 
