@@ -5,6 +5,10 @@ This is just a README file with details about Udacity's Full-Stack Web Developer
 
 The app hosted is the Item Catalog application available at https://github.com/pt314/udacity-fsnd-p3-item-catalog
 
+Note that this is a log of changes made. Some things may not apply later if the application is modified, and the application will only be available temporarily on the web server.
+
+Also, this is a learning project, so suggestions welcome :)
+
 
 Accessing the server
 --------------------
@@ -17,7 +21,7 @@ mv ~/Downloads/udacity_key.rsa ~/.ssh/
 chmod 600 ~/.ssh/udacity_key.rsa
 ssh -i ~/.ssh/udacity_key.rsa root@SERVER_IP
 ```
-Note: For chmod to work using Cygwin on Windows, had to do `chgrp -R Users ~/.ssh`; see [chmod 600 using Cygwin and Windows][2]
+Note: For chmod to work using Cygwin on Windows, had to do `chgrp -R Users ~/.ssh` (see [chmod 600 using Cygwin and Windows][2]).
 
 Remote root access has been disabled and a `catalog` user has been created with its own SSH key. To access the server use:
 ```
@@ -26,85 +30,96 @@ ssh -p SSH_PORT -i ~/.ssh/udacity_key_catalog catalog@SERVER_IP
 For this to work, the private key file `udacity_key_catalog` is required (only provided to grader).
 
 
+Summary of changes
+------------------
+
+This is a short summary of changes. More details can be found below.
+
+- Created `catalog` user for running the application with its own SSH key.
+- The `catalog` user has sudo permissions and password is required with using sudo.
+- Remote login of `root` user is disabled.
+- SSH is hosted on a non-default port and SSH authentication is enforced.
+- Firewall configured to only allow connections for SSH (port SSH_PORT), HTTP (port 80), and NTP (port 123).
+- Applications have been updated.
+- [PostgreSQL][4] has been installed and configured as the database server.
+- [Apache][8] web server and [mod_wsgi][9] have been installed.
+- Other packages required by the application have been installed.
+- Item Catalog application has been setup.
+
+
 User management
 ---------------
 
-- Created `catalog` user.
-  ```
-  $ adduser catalog
-  ```
+1. Created `catalog` user with sudo permissions:
 
-- Gave sudo permissions to `catalog` user.
-  ```
-  $ cd /etc/sudoers.d/
-  $ touch catalog
-  $ chmod 440 catalog
-  ```
+    - Create user:
+      ```
+      $ adduser catalog
+      ```
 
-  Edit `catalog` file and add line:
-  ```
-  student ALL=(ALL) NOPASSWD:ALL
-  ```
+    - Create sudo config file:
+      ```
+      $ cd /etc/sudoers.d/
+      $ touch catalog
+      $ chmod 440 catalog
+      ```
 
-- Password is required for `catalog` user when using sudo (using default timeout).
-  ```
-  $ nano /etc/sudoers.d/catalog
-  ```
+    - Edit `catalog` file and add line:
+      ```
+      student ALL=(ALL) NOPASSWD:ALL
+      ```
 
-  Edit file and remove `NOPASSWD`:
-  ```
-  student ALL=(ALL) ALL
-  ````
-
-- Remote login of `root` user is disabled.
-  ```
-  $ nano /etc/ssh/sshd_config
-  ```
+2. Password is required for `catalog` user when using sudo (using default timeout).
   
-  Set:
-  ```
-  PermitRootLogin no
-  ```
-  
-  Then:
-  ```
-  $ service ssh restart
-  ```
-  
-  Warning: Make sure you can access the server with other user before disabling this.
+    - Edit sudoers file:
+      ```$ nano /etc/sudoers.d/catalog```
 
+    - Make sure `NOPASSWD` is removed:
+      ```student ALL=(ALL) ALL```
+
+3. Remote login of `root` user is disabled.
+
+    - Edit config file:
+      ```$ nano /etc/ssh/sshd_config```
+   
+    - Set login option:
+      ```PermitRootLogin no```
+   
+    - Then restart SSH:
+      ```$ service ssh restart```
+  
+  Warning: Make sure you can access the server with another user before disabling this.
 
 
 Security
 --------
 
-0. Generated new key pair for user `catalog`:
+1. Generated new key pair for user `catalog`:
 
-  - By doing this the user does not have to have the `root` user's key. For this project it does not matter since the `catalog` user is the only user and it has full sudo access, but in general this is better.
+    - By doing this the user does not have to have the `root` user's key. For this project it does not matter since the `catalog` user is the only user and it has full sudo access, but in general this is better.
 
-  - Keys generated on personal computer (not on server) to keep the private key private, using `ssh-keygen` and saving to file `~/.ssh/udacity_key_catalog`. This generates a file `udacity_key_catalog` with the private key and a file `udacity_key_catalog.pub` with the public key. Read `man ssh-keygen` for more details.
+    - Keys generated on personal computer (not on server) to keep the private key private, using `ssh-keygen` and saving to file `~/.ssh/udacity_key_catalog`. This generates a file `udacity_key_catalog` with the private key and a file `udacity_key_catalog.pub` with the public key. Read `man ssh-keygen` for more details.
 
-  - Add public key to server:
-    ```
-    $ cd /home/catalog
-    $ mkdir .ssh
-    $ touch .ssh/authorized_keys
-    $ nano .ssh/authorized_keys
-    ```
+    - Add public key to server:
+      ```
+      $ cd /home/catalog
+      $ mkdir .ssh
+      $ touch .ssh/authorized_keys
+      $ nano .ssh/authorized_keys
+      ```
    
-    Paste public key inside the `authorized_keys` file.
-   
-    ```
-    $ chmod 700 .ssh
-    $ chmod 644 .ssh/authorized_keys
-    $ chown catalog:catalog -R .ssh
-    $ service ssh restart
-    ```
+    - Paste public key inside the `authorized_keys` file.
+      ```
+      $ chmod 700 .ssh
+      $ chmod 644 .ssh/authorized_keys
+      $ chown catalog:catalog -R .ssh
+      $ service ssh restart
+      ```
 
-1. SSH is hosted on non-default port.
+2. SSH is hosted on non-default port.
    
     - Edit config file:
-      `$ sudo nano /etc/ssh/sshd_config`
+      ```$ sudo nano /etc/ssh/sshd_config```
    
     - Set port number:
       ```Port SSH_PORT```
@@ -112,7 +127,7 @@ Security
     - Then restart SSH:
       ```$ service ssh restart```
 
-2. Firewall configured to only allow connections for SSH (port SSH_PORT), HTTP (port 80), and NTP (port 123).
+3. Firewall configured to only allow connections for SSH (port SSH_PORT), HTTP (port 80), and NTP (port 123).
    
     - To start, make sure the firewall is disabled with `sudo ufw status`.
    
@@ -136,9 +151,7 @@ Security
       $ sudo ufw status
       ```
     
-    * Warning: Make sure you are connected over port SSH_PORT before doing this.
-
-3. Key-based SSH authentication is enforced.
+4. Key-based SSH authentication is enforced.
    
     - Edit config file:
       ```$ sudo nano /etc/ssh/sshd_config```
@@ -149,9 +162,9 @@ Security
     - Then restart SSH
       ```$ service ssh restart```
     
-    * Warning: Make sure you can access the server with the SSH key before doing this.
+    Warning: Make sure you can access the server with the SSH key before doing this.
 
-4. Applications have been updated to most recent updates.
+5. Applications have been updated to most recent updates.
 
     - Update packages:
       ```
@@ -200,11 +213,7 @@ Application
 
     - Remote connections are dissabled (by default) in `/etc/postgresql/9.3/main/pg_hba.conf`
 
-2. VM can be remotely logged into.
-
-    See how to access the server at the top of this file.
-
-3. Web-server has been configured to serve the Item Catalog application as a wsgi app.
+2. Web-server has been configured to serve the Item Catalog application as a wsgi app.
 
     - Install [Apache][8] web server and [mod_wsgi][9]:
       ```
