@@ -5,9 +5,20 @@ This is just a README file with details about Udacity's Full-Stack Web Developer
 
 The app hosted is the Item Catalog application available at https://github.com/pt314/udacity-fsnd-p3-item-catalog
 
-Note that this is a log of changes made. Some things may not apply later if the application is modified, and the application will only be available temporarily on the web server.
+Note that this is a log of changes made. Some things may not apply later if the application is modified later, and the application will only be available temporarily on the web server. Also, this is a learning project, so suggestions welcome :)
 
-Also, this is a learning project, so suggestions welcome :)
+For some time the application is available at http://ec2-52-36-197-127.us-west-2.compute.amazonaws.com/
+
+
+App and server info
+-------------------
+
+Replace these constants when reading the text below.
+
+- APP_URL = http://ec2-52-36-197-127.us-west-2.compute.amazonaws.com/
+- SERVER_NAME = ec2-52-36-197-127.us-west-2.compute.amazonaws.com
+- SERVER_IP = 52.36.197.127
+- SSH_PORT = 2200
 
 
 Accessing the server
@@ -209,9 +220,9 @@ Application
       catalog=> ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT, USAGE ON SEQUENCES TO catalog;
       ```
 
-      Note: Priviledges are given to the catalog user directly. For more complex situations, using roles may be desirable.
+      Note: Privileges are given to the catalog user directly. For more complex situations, using roles may be desirable.
 
-    - Remote connections are dissabled (by default) in `/etc/postgresql/9.3/main/pg_hba.conf`
+    - Remote connections are disabled (by default) in `/etc/postgresql/9.3/main/pg_hba.conf`
 
 2. Web-server has been configured to serve the Item Catalog application as a wsgi app.
 
@@ -252,7 +263,7 @@ Application
     - Configure application (see configuration details in project's README):
 
       - Google sign-in (configure [Google Developers Console project][10] and add `client_secret_google.json`)
-      - Secret keys (be sure to update these and use randomly generated secure keys, using for example [keygen.py](keygen.py))
+      - Secret keys (be sure to update these and use randomly generated secure keys, using for example [`keygen.py`](keygen.py))
 
       Note: Created [issue](https://github.com/pt314/udacity-fsnd-p3-item-catalog/issues/2) - Move settings to config file.
 
