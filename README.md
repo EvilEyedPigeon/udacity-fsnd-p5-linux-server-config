@@ -57,6 +57,13 @@ This is a short summary of changes. More details can be found below.
 - Other packages required by the application have been installed.
 - Item Catalog application has been setup.
 
+Some possible improvements:
+
+- Using UFW rate limiting to prevent brute force attacks.
+- Configuring backup (definitely at least for the database).
+- Apache status monitoring with mod_status module.
+- System monitoring with [Munin][12] or [Nagios][13]. 
+
 
 User management
 ---------------
@@ -339,3 +346,5 @@ Application
 [9]: http://www.modwsgi.org/ "mod_wsgi"
 [10]: https://developers.google.com/identity/sign-in/web/devconsole-project "Creating a Google Developers Console project and client ID"
 [11]: http://flask.pocoo.org/docs/0.10/deploying/mod_wsgi/ "Flask documentation: mod_wsgi (Apache)"
+[12]: https://www.digitalocean.com/community/tutorials/how-to-install-munin-on-an-ubuntu-vps "How To Install Munin on an Ubuntu VPS"
+[13]: https://www.digitalocean.com/community/tutorials/how-to-install-nagios-4-and-monitor-your-servers-on-ubuntu-14-04 "How To Install Nagios 4 and Monitor Your Servers on Ubuntu 14.04"
